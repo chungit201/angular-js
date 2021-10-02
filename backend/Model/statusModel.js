@@ -19,7 +19,7 @@ const statusSchema = new mongoose.Schema({
     type: ObjectId,
     ref: 'Like'
   },
-  comments: {
+  comment: {
     type: ObjectId,
     ref: 'Comments'
   }

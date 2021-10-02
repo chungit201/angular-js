@@ -14,6 +14,7 @@ import { SearchComponent } from '../header/search/search.component';
 import { SideBarMenuComponent } from '../main/side-bar-menu/side-bar-menu.component';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { StoryComponent } from '../main/story/story.component';
+import { TimeDistancePipe } from 'src/app/pipes/time-distance.pipe';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { StoryComponent } from '../main/story/story.component';
     SearchComponent,
     MainComponent,
     SignUpComponent,
+    TimeDistancePipe,
   ],
   imports: [CommonModule, ClientRoutingModule],
 })

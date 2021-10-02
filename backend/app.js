@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors';
 const app = express();
 
 
@@ -25,6 +26,9 @@ mongoose.connection.on('error', err => {
 
 // Middleware
 app.use(express.json());
+app.use(cors({
+  credentials: 'same-origin'
+}));
 
 app.use('/api', authRouter);
 app.use('/api', userRouter);

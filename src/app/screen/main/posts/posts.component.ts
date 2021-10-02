@@ -1,106 +1,123 @@
 import { Component, OnInit } from '@angular/core';
-
+import { PostService } from '../../../services/post.service';
+import { PostModel } from 'src/app/model/post-model';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css'],
 })
 export class PostsComponent implements OnInit {
-  constructor() {}
+  posts: PostModel[] = [];
+  postLoad: any;
+
+  constructor(private postService: PostService) {}
 
   ngOnInit(): void {
-    this.postMultipleMedia();
-    this.postButtonScroll();
+    this.postService.getPosts().subscribe(async (data: any) => {
+      const { status } = await data;
+      this.posts = status;
+
+      this.postMultipleMedia();
+    });
   }
 
   // POST MULTIPLE MEDIAS
   // Creating scroll buttons and indicators when post has more than one media
   postMultipleMedia(): void {
-    const posts = document.querySelectorAll('.post');
-    posts.forEach((post) => {
-      if (post.querySelectorAll('.post__media').length > 1) {
-        const leftButtonElement = document.createElement('button');
-        leftButtonElement.classList.add('post__left-button');
-        leftButtonElement.innerHTML = `
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                  <path fill="var(--primary)" d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z"></path>
-              </svg>
-          `;
+    window.onload = (event: any) => {
+      const posts = document.querySelectorAll('.post');
+      posts.forEach((post) => {
+        if (post.querySelectorAll('.post__media').length > 1) {
+          const leftButtonElement = document.createElement('button');
+          leftButtonElement.classList.add('post__left-button');
+          leftButtonElement.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path fill="var(--primary)" d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z"></path>
+                </svg>
+            `;
 
-        const rightButtonElement = document.createElement('button');
-        rightButtonElement.classList.add('post__right-button');
-        rightButtonElement.innerHTML = `
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                  <path fill="var(--primary)" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
-              </svg>
-          `;
+          const rightButtonElement = document.createElement('button');
+          rightButtonElement.classList.add('post__right-button');
+          rightButtonElement.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path fill="var(--primary)" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
+                </svg>
+            `;
 
-        post.querySelector('.post__content')!.appendChild(leftButtonElement);
-        post.querySelector('.post__content')!.appendChild(rightButtonElement);
+          post.querySelector('.post__content')!.appendChild(leftButtonElement);
+          post.querySelector('.post__content')!.appendChild(rightButtonElement);
 
-        post.querySelectorAll('.post__media').forEach(function () {
-          const postMediaIndicatorElement = document.createElement('div');
-          postMediaIndicatorElement.classList.add('post__indicator');
+          post.querySelectorAll('.post__media').forEach(function () {
+            const postMediaIndicatorElement = document.createElement('div');
+            postMediaIndicatorElement.classList.add('post__indicator');
 
-          post
-            .querySelector('.post__indicators')!
-            .appendChild(postMediaIndicatorElement);
-        });
+            post
+              .querySelector('.post__indicators')!
+              .appendChild(postMediaIndicatorElement);
+          });
 
-        // Observer to change the actual media indicator
-        const postMediasContainer = post.querySelector('.post__medias');
-        const postMediaIndicators = post.querySelectorAll('.post__indicator');
-        const postIndicatorObserver = new IntersectionObserver(
-          function (entries) {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                // Removing all the indicators
-                postMediaIndicators.forEach((indicator) =>
-                  indicator.classList.remove('post__indicator--active')
-                );
-                // Adding the indicator that matches the current post media
-                postMediaIndicators[
-                  Array.from(postMedias).indexOf(entry.target)
-                ].classList.add('post__indicator--active');
-              }
-            });
-          },
-          {
-            root: postMediasContainer,
-            threshold: 0.5,
-          }
-        );
+          // Observer to change the actual media indicator
+          const postMediasContainer = post.querySelector('.post__medias');
+          const postMediaIndicators = post.querySelectorAll('.post__indicator');
+          const postIndicatorObserver = new IntersectionObserver(
+            function (entries) {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  // Removing all the indicators
+                  postMediaIndicators.forEach((indicator) =>
+                    indicator.classList.remove('post__indicator--active')
+                  );
+                  // Adding the indicator that matches the current post media
+                  postMediaIndicators[
+                    Array.from(postMedias).indexOf(entry.target)
+                  ].classList.add('post__indicator--active');
+                }
+              });
+            },
+            {
+              root: postMediasContainer,
+              threshold: 0.5,
+            }
+          );
 
-        // Calling the observer for every post media
-        const postMedias = post.querySelectorAll('.post__media');
-        postMedias.forEach((media) => {
-          postIndicatorObserver.observe(media);
-        });
-      }
-    });
+          // Calling the observer for every post media
+          const postMedias = post.querySelectorAll('.post__media');
+          postMedias.forEach((media) => {
+            postIndicatorObserver.observe(media);
+          });
+        }
+      });
+      this.postButtonScroll();
+    };
   }
 
   // Adding buttons features on every post with multiple medias
   postButtonScroll() {
-    const postsContent = document.querySelectorAll('.post__content');
-    postsContent.forEach((post) => {
+    const postsContent: any = document.querySelectorAll('.post__content');
+    postsContent.forEach((post: any) => {
       if (post.querySelectorAll('.post__media').length > 1) {
         const leftButton: any = post.querySelector('.post__left-button')!;
         const rightButton: any = post.querySelector('.post__right-button')!;
         const postMediasContainer = post.querySelector('.post__medias')!;
-
         // Functions for left and right buttons
-        // console.log(leftButton);
-        leftButton.addEventListener('click', () => {
-          postMediasContainer.scrollLeft -= 400;
-        });
-        rightButton.addEventListener('click', () => {
-          postMediasContainer.scrollLeft += 400;
-        });
+        // console.log(postMediasContainer);
+        if (leftButton) {
+          leftButton.addEventListener('click', () => {
+            postMediasContainer.scrollLeft -= 400;
+          });
+        }
+        if (rightButton) {
+          rightButton.addEventListener('click', () => {
+            postMediasContainer.scrollLeft += 400;
+          });
+        }
 
         // Observer to hide button if necessary
         const postButtonObserver = new IntersectionObserver(
           function (entries) {
+            if (!entries || !leftButton || !rightButton) {
+              return;
+            }
             entries.forEach((entry) => {
               if (
                 entry.target === post.querySelector('.post__media:first-child')
