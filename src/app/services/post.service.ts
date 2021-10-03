@@ -20,14 +20,14 @@ export class PostService {
     return this.http.get<PostModel[]>(url);
   }
 
-  public createPost(data: PostModel): Observable<PostModel[]> {
+  public createPost(data: PostModel[]): Observable<PostModel[]> {
     const url = `${environment.api}/post/create`;
-    return this.http.post<PostModel[]>(url, data);
+    return this.http.post<PostModel[]>(url, data[0]);
   }
 
-  public updatePost(id: string, data: PostModel): Observable<PostModel[]> {
+  public updatePost(id: string, data: PostModel[]): Observable<PostModel[]> {
     const url = `${environment.api}/post/create/${id}`;
-    return this.http.put<PostModel[]>(url, data);
+    return this.http.put<PostModel[]>(url, data[0]);
   }
 
   public removePost(id: string): Observable<PostModel[]> {

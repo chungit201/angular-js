@@ -12,17 +12,18 @@ export const registerControllers = async (req, res) => {
     name,
     email,
     password,
+    birthday
   } = req.body;
   const users = new User({
     name,
     email,
     password,
+    birthday,
     emailToken: uuidv4()
   });
-  //   console.log(users.email, users.hashed_password, users.name);
   if (!users.email || !users.hashed_password || !users.name) {
     return res.status(400).json({
-      success: false,
+      error: false,
       message: 'register false'
     });
   }
@@ -467,13 +468,10 @@ export const activeEmail = async (req, res) => {
             error: 'Active user failure'
           })
         }
-        res.send(`
-          <script>
-              window.location.href = "${process.env.LOCAL}"
-          </script>
-        `)
       })
-      return;
+      return res.json({
+        message: 'verify account successfully'
+      });
     }
     return res.status(403).json({
       error: 'Email is not verified'
@@ -493,11 +491,11 @@ export const checkActiveEmail = async (req, res, next) => {
     })
     if (user.active) {
       next();
-      return;
+    } else {
+      return res.status(401).json({
+        error: 'Please check your email to verify your account'
+      })
     }
-    return res.status(401).json({
-      error: 'Please check your email to verify your account'
-    })
   } catch (error) {
     return res.status(401).json({
       error: 'Please check user or password'
@@ -514,7 +512,7 @@ exports.signin = (req, res) => {
   } = req.body;
   User.findOne({
     email
-  }), (err, user) => {
+  }).exec((err, user) => {
     if (!user || err) {
       return res.status(401).json({
         error: 'User with that email does not exist. Please signup'
@@ -529,24 +527,27 @@ exports.signin = (req, res) => {
     const token = jwt.sign({
       _id: user._id
     }, process.env.JWT_SECRET);
-
     res.cookie('token', token, {
       expire: new Date() + 9999
     });
     const {
       _id,
       name,
-      email
+      email,
+      avatar,
+      birthday
     } = user;
     return res.json({
       token,
       user: {
         _id,
         email,
-        name
+        name,
+        avatar,
+        birthday
       }
     })
-  }
+  })
 }
 
 // đăng xuất

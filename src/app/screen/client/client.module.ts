@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ClientRoutingModule } from './client-routing.module';
 import { ClientComponent } from './client.component';
 import { FooterComponent } from '../footer/footer.component';
@@ -15,6 +14,11 @@ import { SideBarMenuComponent } from '../main/side-bar-menu/side-bar-menu.compon
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { StoryComponent } from '../main/story/story.component';
 import { TimeDistancePipe } from 'src/app/pipes/time-distance.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { CommentComponent } from '../main/posts/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,14 @@ import { TimeDistancePipe } from 'src/app/pipes/time-distance.pipe';
     MainComponent,
     SignUpComponent,
     TimeDistancePipe,
+    CommentComponent,
   ],
-  imports: [CommonModule, ClientRoutingModule],
+  imports: [
+    CommonModule,
+    ClientRoutingModule,
+    ReactiveFormsModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'cloud'),
+  ],
 })
 export class ClientModule {}

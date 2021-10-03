@@ -3,7 +3,8 @@ import {
   registerControllers,
   activeEmail,
   signin,
-  signout
+  signout,
+  checkActiveEmail
 } from '../Controllers/auth';
 const router = express.Router();
 
@@ -12,7 +13,7 @@ router.post('/signup', registerControllers);
 // xác thực email
 router.get('/active-email', activeEmail);
 // đăng nhập. check active
-router.post('/signin', activeEmail, signin);
+router.post('/signin', checkActiveEmail, signin);
 //đăng xuất 
 router.get('/signout', signout);
 

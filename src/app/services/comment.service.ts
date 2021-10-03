@@ -10,17 +10,17 @@ import { CommentModel } from '../model/comment-model';
 export class CommentService {
   constructor(private http: HttpClient) {}
 
-  public createComment(data: CommentModel): Observable<CommentModel[]> {
+  public createComment(data: CommentModel[]): Observable<CommentModel[]> {
     const url = `${environment.api}/comment/create`;
-    return this.http.post<CommentModel[]>(url, data);
+    return this.http.post<CommentModel[]>(url, data[0]);
   }
 
   public updateComment(
     id: String,
-    data: CommentModel
+    data: CommentModel[]
   ): Observable<CommentModel[]> {
     const url = `${environment.api}/comment/update/${id}`;
-    return this.http.put<CommentModel[]>(url, data);
+    return this.http.put<CommentModel[]>(url, data[0]);
   }
 
   public removeComment(id: string): Observable<CommentModel[]> {

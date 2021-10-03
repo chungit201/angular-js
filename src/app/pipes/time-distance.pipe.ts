@@ -5,25 +5,26 @@ import * as moment from 'moment';
 })
 export class TimeDistancePipe implements PipeTransform {
   transform(value: Date, ...args: unknown[]): unknown {
-    const startDay = new Date(value);
-    const endDay = new Date();
-    let millisBetween = startDay.getTime() - endDay.getTime();
-    let days = millisBetween / (1000 * 3600 * 24);
-    let day = Math.round(Math.abs(days));
-    let year = Math.round(day / 365);
-    let hour = Math.round(day * 24);
-    let minute = Math.round(hour * 60);
-    let second = minute * 60;
+    const startDay = moment(value);
+    const endDay = moment();
+    const year = endDay.diff(startDay, 'year');
+    const month = endDay.diff(startDay, 'months');
+    const day = endDay.diff(startDay, 'days');
+    const hour = endDay.diff(startDay, 'hours');
+    const minute = endDay.diff(startDay, 'minutes');
+    const second = endDay.diff(startDay, 'seconds');
     if (second < 60) {
-      return second + ' giây trước';
+      return second + ' second ago';
     } else if (minute < 60) {
-      return minute + ' phút trước';
+      return minute + ' minute ago';
     } else if (hour < 24) {
-      return hour + ' giờ trước';
-    } else if (day < 365) {
-      return day + ' ngày trước';
+      return hour + ' hour ago';
+    } else if (day < 30) {
+      return day + ' day ago';
+    } else if (month < 12) {
+      return month + ' month ago';
     } else {
-      return year + ' năm trước';
+      return year + ' year ago';
     }
   }
 }

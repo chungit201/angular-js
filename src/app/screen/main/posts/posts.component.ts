@@ -16,7 +16,6 @@ export class PostsComponent implements OnInit {
     this.postService.getPosts().subscribe(async (data: any) => {
       const { status } = await data;
       this.posts = status;
-
       this.postMultipleMedia();
     });
   }
@@ -150,13 +149,5 @@ export class PostsComponent implements OnInit {
         }
       }
     });
-  }
-
-  //Resize input comment
-  reSizeComment(event: any) {
-    const textarea: any = document.querySelector('.textarea_comment');
-    textarea.style.height = '21px';
-    let scHeight = event.target.scrollHeight;
-    textarea.style.height = `${scHeight}px`;
   }
 }

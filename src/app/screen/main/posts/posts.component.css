@@ -453,6 +453,7 @@ img {
   flex: none;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  object-fit: cover;
 }
 
 .post__footer {

@@ -9,9 +9,9 @@ import { LikeModel } from '../model/like-model';
 export class LikeService {
   constructor(private http: HttpClient) {}
 
-  public createLike(data: LikeModel): Observable<LikeModel[]> {
+  public createLike(data: LikeModel[]): Observable<LikeModel[]> {
     const url = `${environment.api}/like/create`;
-    return this.http.post<LikeModel[]>(url, data);
+    return this.http.post<LikeModel[]>(url, data[0]);
   }
 
   public detailLike(id: string): Observable<LikeModel[]> {
@@ -21,6 +21,6 @@ export class LikeService {
 
   public updateLike(id: String, data: LikeModel[]): Observable<LikeModel[]> {
     const url = `${environment.api}/like/update/${id}`;
-    return this.http.put<LikeModel[]>(url, data);
+    return this.http.put<LikeModel[]>(url, data[0]);
   }
 }
