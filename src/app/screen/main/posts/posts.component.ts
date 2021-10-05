@@ -142,4 +142,22 @@ export class PostsComponent implements OnInit {
     let scHeight = event.target.scrollHeight;
     textarea.style.height = `${scHeight}px`;
   }
+
+  //Open Post Form
+  openCommentDetail(){
+    let modal: any = document.getElementById("commentDetailPost");
+    let close: any = document.getElementsByClassName("closePopupComment")[0];
+
+    modal.style.display = "block";
+
+    close.onclick = function () {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+    }
+  }
 }
