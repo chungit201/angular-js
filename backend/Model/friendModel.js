@@ -9,7 +9,7 @@ const friendSchema = new mongoose.Schema({
     required: true,
   },
   friends: {
-    type: Object,
+    type: Array,
   },
   status: {
     type: Boolean,

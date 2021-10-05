@@ -1,10 +1,9 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommentService } from 'src/app/services/comment.service';
 import { CommentModel } from 'src/app/model/comment-model';
 import { FormControl, FormGroup, FormsModule } from '@angular/forms';
-import { Input, EventEmitter } from '@angular/core';
+import { Input } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
-import { UserModel } from 'src/app/model/user-model';
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
@@ -22,7 +21,9 @@ export class CommentComponent implements OnInit {
     private userService: UserService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // console.log(this.itemPost);
+  }
 
   public createComment(): void {
     this.comment = [
@@ -32,9 +33,7 @@ export class CommentComponent implements OnInit {
         status: this.itemPost._id,
       },
     ];
-    this.commentService.createComment(this.comment).subscribe((data) => {
-      console.log(data);
-    });
+    this.commentService.createComment(this.comment).subscribe();
   }
 
   //Resize input comment

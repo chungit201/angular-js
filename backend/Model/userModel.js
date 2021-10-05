@@ -48,6 +48,10 @@ const userSchema = new mongoose.Schema({
   },
   emailToken: {
     type: String,
+  },
+  activeStatus: {
+    type: Boolean,
+    default: false
   }
 
 }, {

@@ -19,7 +19,9 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { CommentComponent } from '../main/posts/comment/comment.component';
-
+import { FormsModule } from '@angular/forms';
+import { LikeComponent } from '../main/posts/like/like.component';
+import { LogoutComponent } from '../header/logout/logout.component';
 @NgModule({
   declarations: [
     ClientComponent,
@@ -36,12 +38,15 @@ import { CommentComponent } from '../main/posts/comment/comment.component';
     SignUpComponent,
     TimeDistancePipe,
     CommentComponent,
+    LikeComponent,
+    LogoutComponent,
   ],
   imports: [
     CommonModule,
     ClientRoutingModule,
     ReactiveFormsModule,
     AngularFireStorageModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, 'cloud'),
   ],
 })

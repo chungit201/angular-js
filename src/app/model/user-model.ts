@@ -3,11 +3,12 @@ import { FriendModel } from './friend-model';
 export interface UserModel {
   _id?: String;
   name?: String;
-  email: String;
+  email?: String;
   avatar?: String;
   status?: PostModel;
   birthday?: Date;
-  password: String;
+  password?: String;
   friend?: FriendModel;
   active?: Boolean;
+  activeStatus?: Boolean;
 }

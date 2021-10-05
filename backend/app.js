@@ -10,6 +10,8 @@ const userRouter = require('./Routes/user');
 const statusRouter = require('./Routes/status');
 const likeRouter = require('./Routes/like');
 const commentRouter = require('./Routes/comment');
+const friendRouter = require('./Routes/friend');
+
 dotenv.config()
 
 //db connection
@@ -35,6 +37,7 @@ app.use('/api', userRouter);
 app.use('/api', statusRouter);
 app.use('/api', likeRouter);
 app.use('/api', commentRouter);
+app.use('/api', friendRouter);
 
 const port = process.env.PORT || 8000
 app.listen(port, () => {

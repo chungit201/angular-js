@@ -11,6 +11,7 @@ import {
 import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { FirebaseService } from 'src/app/services/firebase.service';
 @Component({
   selector: 'app-post-form',
   templateUrl: './post-form.component.html',
@@ -23,16 +24,18 @@ export class PostFormComponent implements OnInit {
   private photo?: string[];
   private downloadURL?: any;
   private task?: AngularFireUploadTask;
+
   public postForm = new FormGroup({
     name: new FormControl(''),
     description: new FormControl(''),
     photo: new FormControl(''),
   });
+
   constructor(
     private userService: UserService,
     private postService: PostService,
     private storage: AngularFireStorage,
-    private router: Router
+    private router: Router // private firebaseService: FirebaseService
   ) {}
 
   ngOnInit(): void {
@@ -49,56 +52,48 @@ export class PostFormComponent implements OnInit {
 
   public async createPost(): Promise<void> {
     let image: any = this.photo;
-    const fileRef: any = this.storage.ref(`images/${image.name}`);
-    this.task = fileRef.put(image);
-    this.task
-      ?.snapshotChanges()
-      .pipe(
-        finalize(() => {
-          this.downloadURL = fileRef.getDownloadURL();
-          this.downloadURL.subscribe((url: any) => {
-            this.post = [
-              {
-                user: this.id,
-                description: this.postForm.value.description,
-                photo: url,
-              },
-            ];
-            this.postService
-              .createPost(this.post)
-              .subscribe((data: PostModel[]) => {
-                window.location.reload();
-              });
-          });
-        })
-      )
-      .subscribe();
-  }
-
-  private async uploadImage(path: string, image: any): Promise<any> {
-    const fileRef: any = this.storage.ref(`${path}/${image.name}`);
-    this.task = fileRef.put(image);
-    this.task
-      ?.snapshotChanges()
-      .pipe(
-        finalize(() => {
-          this.downloadURL = fileRef.getDownloadURL();
-          this.downloadURL.subscribe((url: any) => {
-            console.log(url);
-            return url;
-            // this.post = [
-            //   {
-            //     user: this.name,
-            //     description: this.postForm.value.description,
-            //     photo: url,
-            //   },
-            // ];
-          });
-        })
-      )
-      .subscribe((url: any) => {
-        // console.log(url);
+    console.log(image.type);
+    if (!image) {
+      this.post = [
+        {
+          user: this.id,
+          description: this.postForm.value.description,
+        },
+      ];
+      this.postService.createPost(this.post).subscribe(() => {
+        window.location.reload();
       });
+      // } else if (image.size > 500000) {
+      //   alert('size>5m');
+      //   // } else if (image.type == 'image/jpeg' || image.type == 'image/png') {
+      //   console.log(image.type);
+      //   alert('type not image');
+    } else {
+      const fileRef: any = this.storage.ref(`images/${image.name}`);
+      this.task = fileRef.put(image);
+      this.task
+        ?.snapshotChanges()
+        .pipe(
+          finalize(() => {
+            this.downloadURL = fileRef.getDownloadURL();
+            this.downloadURL.subscribe((url: any) => {
+              this.post = [
+                {
+                  user: this.id,
+                  description: this.postForm.value.description,
+                  photo: url,
+                },
+              ];
+              this.postService
+                .createPost(this.post)
+                .subscribe((data: PostModel[]) => {
+                  window.location.reload();
+                });
+            });
+          })
+        )
+        .subscribe();
+    }
   }
 
   //Resize input post

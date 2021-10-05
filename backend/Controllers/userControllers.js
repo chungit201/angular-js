@@ -26,7 +26,7 @@ export const updateUser = (req, res) => {
     $set: req.body
   }, {
     new: true
-  }, (err, user) => {
+  }).exec((err, user) => {
     if (err) {
       return res.status(400).json({
         error: 'You are not authorized to perform in action'
@@ -35,5 +35,22 @@ export const updateUser = (req, res) => {
     user.hashed_password = undefined;
     user.salt = undefined;
     res.json(user)
+  })
+}
+
+export const searchUser = (req, res) => {
+  let search = req.query.search ? req.query.search : '';
+  User.find({
+    "name": {
+      $regex: search,
+      $options: '$i'
+    }
+  }).exec((err, user) => {
+    if (err) {
+      res.status(400).json({
+        error: "User not found"
+      })
+    }
+    res.json((user))
   })
 }

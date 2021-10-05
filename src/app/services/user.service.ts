@@ -30,6 +30,14 @@ export class UserService {
     return localStorage.getItem('id')!;
   }
 
+  public getActive(): string {
+    return localStorage.getItem('active')!;
+  }
+
+  public setActive(data: string): void {
+    localStorage.setItem('active', data);
+  }
+
   public verifyEmail(token: string) {
     const url = `${environment.api}/active-email?token=${token}`;
     return this.http.get<UserModel[]>(url);
@@ -41,6 +49,9 @@ export class UserService {
   }
 
   public signOut(): Observable<UserModel[]> {
+    localStorage.removeItem('active');
+    localStorage.removeItem('id');
+    localStorage.removeItem('token');
     const url = `${environment.api}/signout`;
     return this.http.get<UserModel[]>(url);
   }

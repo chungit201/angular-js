@@ -1,6 +1,19 @@
 import Friend from '../Model/friendModel';
 
-export const addfriend = (req, res) => {
+export const listFriend = (req, res) => {
+  Friend.find((err, friends) => {
+    if (err) {
+      return res.status(400).json({
+        err
+      })
+    }
+    res.json(
+      friends
+    );
+  })
+}
+
+export const addFriend = (req, res) => {
   const friend = new Friend(req.body);
   friend.save((err, friend) => {
     if (err) {
@@ -30,8 +43,8 @@ export const friendID = (req, res, next, id) => {
 }
 
 export const removeFriend = (req, res) => {
-  let comment = req.comment;
-  comment.delete((err, comment) => {
+  let comment = req.friend;
+  comment.remove((err, friend) => {
     if (err) {
       return res.status(400).json({
         err,

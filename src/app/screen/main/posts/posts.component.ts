@@ -1,22 +1,75 @@
+import { FriendService } from './../../../services/friend.service';
+import { UserModel } from './../../../model/user-model';
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../../services/post.service';
 import { PostModel } from 'src/app/model/post-model';
+import { UserService } from '../../../services/user.service';
+import { FriendModel } from 'src/app/model/friend-model';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css'],
 })
 export class PostsComponent implements OnInit {
+  postAll: PostModel[] = [];
   posts: PostModel[] = [];
-  postLoad: any;
-
-  constructor(private postService: PostService) {}
+  dataAll: PostModel[] = [];
+  private friends?: Object[] = [];
+  private id?: string;
+  constructor(
+    private postService: PostService,
+    private userService: UserService,
+    private friendService: FriendService
+  ) {}
 
   ngOnInit(): void {
+    this.listPost();
+    this.id = this.userService.getID();
+  }
+
+  private listPost(): void {
     this.postService.getPosts().subscribe(async (data: any) => {
       const { status } = await data;
-      this.posts = status;
+      this.filterPostUserFriend(status);
       this.postMultipleMedia();
+    });
+  }
+
+  private filterPostUserFriend(post: PostModel): void {
+    this.userService.profile(this.userService.getID()).subscribe((data) => {
+      this.filterPostUser(data, post);
+    });
+
+    this.friendService.getFriend().subscribe((data) => {
+      this.filterPostFriend(data, post);
+    });
+  }
+
+  private filterPostFriend(friends: FriendModel[], post: any): void {
+    friends.forEach((element: any) => {
+      if (this.id == element.user) {
+        this.friends?.push(element);
+      }
+    });
+    if (this.friends?.length != 0) {
+      this.friends?.forEach((element: any) => {
+        element.friends.forEach((element: any, index: number) => {
+          post.forEach((postE: any) => {
+            if (element == postE.user._id) {
+              this.dataAll = [...this.dataAll, postE];
+            }
+          });
+        });
+      });
+    }
+  }
+
+  private filterPostUser(data: UserModel[], post: any): void {
+    const { _id }: any = data;
+    post.forEach((element: any) => {
+      if (element.user._id === _id) {
+        this.dataAll.push(element);
+      }
     });
   }
 
@@ -99,7 +152,6 @@ export class PostsComponent implements OnInit {
         const rightButton: any = post.querySelector('.post__right-button')!;
         const postMediasContainer = post.querySelector('.post__medias')!;
         // Functions for left and right buttons
-        // console.log(postMediasContainer);
         if (leftButton) {
           leftButton.addEventListener('click', () => {
             postMediasContainer.scrollLeft -= 400;

@@ -9,13 +9,30 @@ import { UserModel } from 'src/app/model/user-model';
 })
 export class SignUpComponent implements OnInit {
   private user: UserModel[] = [];
-
+  public matchPassword?: boolean;
   userForm = new FormGroup({
-    name: new FormControl(null),
-    email: new FormControl(null),
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(50),
+    ]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.email,
+      Validators.maxLength(50),
+      Validators.pattern(`^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$`),
+    ]),
     birthday: new FormControl(''),
-    password: new FormControl(''),
-    confirmPassword: new FormControl(''),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(7),
+      Validators.maxLength(100),
+    ]),
+    confirmPassword: new FormControl('', [
+      Validators.required,
+      Validators.minLength(7),
+      Validators.maxLength(100),
+    ]),
   });
   constructor(private userService: UserService) {}
 
@@ -38,5 +55,26 @@ export class SignUpComponent implements OnInit {
 
   private setTokenSignUp(token: any): void {
     localStorage.setItem('emailToken', token);
+  }
+
+  get name() {
+    return this.userForm.controls;
+  }
+  get email() {
+    return this.userForm.controls;
+  }
+  get password() {
+    return this.userForm.controls;
+  }
+  get confirmPassword() {
+    return this.userForm.controls;
+  }
+
+  public checkMatchPassword(): void {
+    if (this.userForm.value.password != this.userForm.value.confirmPassword) {
+      this.matchPassword = true;
+    } else {
+      this.matchPassword = false;
+    }
   }
 }
