@@ -1,2 +1,4 @@
-/node_modules
-
+# dependencies
+node_modules
+## New Solution:
+## create .gitignore & add node_modules
