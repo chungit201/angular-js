@@ -6,6 +6,7 @@ import { SignUpComponent } from '../sign-up/sign-up.component';
 import { ActiveEmailComponent } from '../login/active-email/active-email.component';
 import { LoginComponent } from '../login/login.component';
 import { MainComponent } from '../main/main.component';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'messenger', component: MessengerComponent },
       { path: 'register', component: SignUpComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'profile', component: UserProfileComponent}
     ],
   },
   { path: 'active-email', component: ActiveEmailComponent },
