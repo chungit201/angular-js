@@ -22,6 +22,8 @@ import { CommentComponent } from '../main/posts/comment/comment.component';
 import { FormsModule } from '@angular/forms';
 import { LikeComponent } from '../main/posts/like/like.component';
 import { LogoutComponent } from '../header/logout/logout.component';
+import { UserProfileComponent } from '../user-profile/user-profile.component';
+
 @NgModule({
   declarations: [
     ClientComponent,
@@ -40,6 +42,7 @@ import { LogoutComponent } from '../header/logout/logout.component';
     CommentComponent,
     LikeComponent,
     LogoutComponent,
+    UserProfileComponent
   ],
   imports: [
     CommonModule,
