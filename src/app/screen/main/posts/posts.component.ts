@@ -202,4 +202,33 @@ export class PostsComponent implements OnInit {
       }
     });
   }
+<<<<<<< HEAD
+=======
+
+  //Resize input comment
+  reSizeComment(event: any){
+    const textarea: any = document.querySelector(".textarea_comment");
+    textarea.style.height = "21px";
+    let scHeight = event.target.scrollHeight;
+    textarea.style.height = `${scHeight}px`;
+  }
+
+  //Open Post Form
+  openCommentDetail(){
+    let modal: any = document.getElementById("commentDetailPost");
+    let close: any = document.getElementsByClassName("closePopupComment")[0];
+
+    modal.style.display = "block";
+
+    close.onclick = function () {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+    }
+  }
+>>>>>>> 9a075f2b778903e5221048ad8e822f8935d0e7fb
 }
