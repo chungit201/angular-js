@@ -864,6 +864,7 @@ img {
 
   .header__search {
     display: flex;
+<<<<<<< HEAD
   }
 
   .header__buttons--mobile {
@@ -873,6 +874,11 @@ img {
   .navbar {
     display: none;
   }
+=======
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid rgb(184, 184, 184);
+>>>>>>> 9a075f2b778903e5221048ad8e822f8935d0e7fb
 }
 
 @media (min-width: 1024px) {
@@ -1042,3 +1048,92 @@ p a:hover {
   color: var(--link);
 }
 /*---End Style Comment*/
+
+
+/*Popup Post Status Style*/
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* The close Popup Comment Button */
+.closePopupComment {
+  color: #383838;
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  right: 0;
+  top: 10%;
+}
+
+.closePopupComment:hover,
+.closePopupComment:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/*Style Popup*/
+.container_commentDetail {
+  margin: auto;
+  width: 1200px;
+  overflow: hidden;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  transition: height 0.2s ease;
+}
+
+/* Slider */
+.container_commentDetail .wrapper_commentDetail {
+  display: flex;
+}
+.container_commentDetail section {
+  background: #fff;
+}
+.container_commentDetail .post_commentDetail {
+  transition: margin-left 0.18s ease;
+}
+.container_commentDetail.active .post_commentDetail {
+  margin-left: -500px;
+}
+.container_commentDetail.active {
+  height: 490px;
+}
+
+/* Popup */
+.post_commentDetail header {
+  font-size: 22px;
+  text-align: center;
+  font-weight: 600;
+  padding: 17px 0;
+  position: relative;
+}
+
+/*Comment Detail*/
+.commentDetail{
+  display: flex;
+}
+
+.commentDetail header {
+  font-size: 22px;
+  text-align: center;
+  font-weight: 600;
+  padding: 17px 0;
+  position: relative;
+}
+
+.commentDetail .post__content{
+  width: 70%;
+  border-right: 1px solid gray;
+}
+/*End Comment Popup*/

@@ -9,5 +9,10 @@ export class ClientComponent implements OnInit {
   public check: boolean = true;
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    window.onhashchange = function () {
+      console.log('location changed!');
+    };
+    window.addEventListener('locationchange', function () {});
+  }
 }
