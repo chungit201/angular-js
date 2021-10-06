@@ -8,6 +8,5 @@ import { UserService } from 'src/app/services/user.service';
 export class ClientComponent implements OnInit {
   public check: boolean = true;
   constructor() {}
-
   ngOnInit(): void {}
 }
