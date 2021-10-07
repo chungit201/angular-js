@@ -15,10 +15,11 @@ export class LikeComponent implements OnInit {
     private likeService: LikeService,
     private userService: UserService
   ) {}
-  public activeLike: boolean = false;
+  public activeLike?: boolean;
 
   ngOnInit(): void {
     this.getID();
+    this.checkActiveLike();
   }
 
   private getID(): void {
@@ -73,5 +74,16 @@ export class LikeComponent implements OnInit {
 
   private resetUpdateUserLike(id: string): String[] {
     return (this.userLike = this.userLike.filter((item) => item != id));
+  }
+
+  private checkActiveLike(): void {
+    this.likeService.findLike(this.itemPost._id).subscribe((data) => {
+      let { like }: any = data;
+      like.user.forEach((user: any) => {
+        if (user == this.id) {
+          this.activeLike = true;
+        }
+      });
+    });
   }
 }
