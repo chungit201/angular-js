@@ -13,7 +13,6 @@ export class CommentComponent implements OnInit {
   @Input() itemPost: any;
   // @Output() onCreateComment: EventEmitter<any> = new EventEmitter();
   private comment: CommentModel[] = [];
-  public cmt?: string;
 
   commentForm = new FormGroup({
     content: new FormControl(''),
@@ -36,7 +35,7 @@ export class CommentComponent implements OnInit {
       },
     ];
     this.commentService.createComment(this.comment).subscribe(() => {
-      this.cmt = '';
+      this.commentForm.setValue({ content: '' });
     });
   }
 
