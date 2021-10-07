@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   private user: UserModel[] = [];
+  public errors?: string;
 
   userForm = new FormGroup({
     email: new FormControl('', [
@@ -38,16 +39,22 @@ export class LoginComponent implements OnInit {
         password: this.userForm.value.password,
       },
     ];
-    this.userService.signIn(this.user).subscribe((data: any) => {
-      this.userService
-        .updateProfile(data.user._id, [{ activeStatus: true }])
-        .subscribe((data: any) => {
-          this.userService.setActive(data.activeStatus);
-        });
-      this.userService.setToken(data.token);
-      this.userService.setID(data.user._id);
-      this.router.navigate(['/']);
-    });
+    this.userService.signIn(this.user).subscribe(
+      (data: any) => {
+        this.userService
+          .updateProfile(data.user._id, [{ activeStatus: true }])
+          .subscribe((data: any) => {
+            this.userService.setActive(data.activeStatus);
+          });
+        this.userService.setToken(data.token);
+        this.userService.setID(data.user._id);
+        this.router.navigate(['/']);
+      },
+      (err: any) => {
+        let { error } = err;
+        this.errors = error.error;
+      }
+    );
   }
 
   // validateEmail(email: string) {
