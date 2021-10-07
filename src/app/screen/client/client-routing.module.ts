@@ -7,6 +7,7 @@ import { ActiveEmailComponent } from '../login/active-email/active-email.compone
 import { LoginComponent } from '../login/login.component';
 import { MainComponent } from '../main/main.component';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
+import { Page404Component } from '../page404/page404.component';
 
 const routes: Routes = [
   {
@@ -17,11 +18,17 @@ const routes: Routes = [
       { path: 'messenger', component: MessengerComponent },
       { path: 'register', component: SignUpComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'profile', component: UserProfileComponent}
+      { path: 'profile', component: UserProfileComponent },
     ],
   },
   { path: 'active-email', component: ActiveEmailComponent },
+  { path: 'page-404', component: Page404Component },
   // { path: 'profile', component:  },
+  {
+    path: '**',
+    redirectTo: '/page-404',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

@@ -10,6 +10,11 @@ import { UserModel } from 'src/app/model/user-model';
 export class SignUpComponent implements OnInit {
   private user: UserModel[] = [];
   public matchPassword?: boolean;
+  public message?: string;
+  public error?: string;
+  public uniqueEmail?: string;
+  public countEmail?: number = 0;
+
   userForm = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -47,10 +52,21 @@ export class SignUpComponent implements OnInit {
         password: this.userForm.value.password,
       },
     ];
-    this.userService.register(this.user).subscribe((data: UserModel[]) => {
-      const { emailToken }: any = data;
-      this.setTokenSignUp(emailToken);
-    });
+    if (!this.matchPassword || this.countEmail !== 0) {
+      return;
+    }
+    this.userService.register(this.user).subscribe(
+      (data: UserModel[]) => {
+        console.log(data);
+        const { message }: any = data;
+        this.message = message;
+        const { emailToken }: any = data;
+        this.setTokenSignUp(emailToken);
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
   }
 
   private setTokenSignUp(token: any): void {
@@ -76,5 +92,14 @@ export class SignUpComponent implements OnInit {
     } else {
       this.matchPassword = false;
     }
+  }
+
+  public uniqueEmails(): void {
+    this.userService.uniqueEmail(this.uniqueEmail!).subscribe((data) => {
+      let { user }: any = data;
+      setTimeout(() => {
+        this.countEmail = user.length;
+      }, 1000);
+    });
   }
 }

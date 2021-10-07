@@ -3,11 +3,13 @@ import {
   userID,
   userDetail,
   updateUser,
-  searchUser
+  searchUser,
+  uniqueEmail
 } from '../Controllers/userControllers';
 const router = express.Router();
 
 router.get('/profile/search', searchUser);
+router.get('/profile/unique-email', uniqueEmail);
 router.get('/profile/:userID', userDetail);
 router.put('/profile/update/:userID', updateUser);
 

@@ -65,4 +65,9 @@ export class UserService {
     const url = `${environment.api}/profile/update/${id}`;
     return this.http.put<UserModel[]>(url, data[0]);
   }
+
+  public uniqueEmail(email: string): Observable<UserModel[]> {
+    const url = `${environment.api}/profile/unique-email?email=${email}`;
+    return this.http.get<UserModel[]>(url);
+  }
 }
