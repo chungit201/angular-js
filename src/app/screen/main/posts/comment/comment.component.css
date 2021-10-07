@@ -3,7 +3,9 @@
   display: flex;
   align-items: center;
 }
-
+.chungokokokokok{
+  color: antiquewhite;
+}
 .comment textarea {
   display: block;
   resize: none;
