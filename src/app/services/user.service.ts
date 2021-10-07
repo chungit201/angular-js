@@ -70,4 +70,9 @@ export class UserService {
     const url = `${environment.api}/profile/unique-email?email=${email}`;
     return this.http.get<UserModel[]>(url);
   }
+
+  public profileDetail(id: string): Observable<UserModel[]> {
+    const url = `${environment.api}/profile/${id}`;
+    return this.http.get<UserModel[]>(url);
+  }
 }

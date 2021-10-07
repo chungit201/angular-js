@@ -13,6 +13,7 @@ export class CommentComponent implements OnInit {
   @Input() itemPost: any;
   // @Output() onCreateComment: EventEmitter<any> = new EventEmitter();
   private comment: CommentModel[] = [];
+
   commentForm = new FormGroup({
     content: new FormControl(''),
   });
@@ -33,7 +34,9 @@ export class CommentComponent implements OnInit {
         status: this.itemPost._id,
       },
     ];
-    this.commentService.createComment(this.comment).subscribe();
+    this.commentService.createComment(this.comment).subscribe(() => {
+      this.commentForm.setValue({ content: '' });
+    });
   }
 
   //Resize input comment

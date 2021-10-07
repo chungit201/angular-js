@@ -24,6 +24,7 @@ import { LikeComponent } from '../main/posts/like/like.component';
 import { LogoutComponent } from '../header/logout/logout.component';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { Page404Component } from '../page404/page404.component';
+import { GetShotTextPipe } from 'src/app/pipes/get-shot-text.pipe';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { Page404Component } from '../page404/page404.component';
     MainComponent,
     SignUpComponent,
     TimeDistancePipe,
+    GetShotTextPipe,
     CommentComponent,
     LikeComponent,
     LogoutComponent,
