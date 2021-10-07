@@ -8,7 +8,8 @@ import { UserModel } from 'src/app/model/user-model';
 })
 export class SearchComponent implements OnInit {
   constructor(private searchService: SearchService) {}
-  search?: string;
+  public search?: string;
+  public dataSearch?: any = [];
   ngOnInit(): void {}
 
   public getSearch(): void {
@@ -16,7 +17,11 @@ export class SearchComponent implements OnInit {
       this.searchService
         .searchToName(this.search!)
         .subscribe((data: UserModel[]) => {
-          console.log(data);
+          let { user }: any = data;
+          this.dataSearch = [];
+          console.log(user);
+          this.dataSearch?.push(user);
+          console.log(this.dataSearch);
         });
     }, 300);
   }
