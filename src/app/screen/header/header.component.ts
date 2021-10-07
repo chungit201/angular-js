@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit {
 
   //Open Account Dropdown Menu
   menuToggle() {
-    const toggleMenu: any = document.querySelector('.profile-button__menu');
+    let toggleMenu: any = document.querySelector('.profile-button__menu');
     toggleMenu.classList.toggle('active');
   }
 }
