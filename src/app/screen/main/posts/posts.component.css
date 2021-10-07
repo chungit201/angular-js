@@ -505,6 +505,7 @@ img {
 }
 .post__likes,
 .post__description {
+  margin-bottom: 10px;
   display: flex;
 }
 .post__likes {
@@ -529,12 +530,7 @@ img {
   border: 1px solid var(--img-border);
   border-radius: 50%;
 }
-.post__likes span,
-.post__description span {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--text-dark);
-}
+
 .post__likes a,
 .post__description a {
   font-size: 14px;
@@ -542,9 +538,11 @@ img {
   color: var(--text-dark);
   text-decoration: none;
 }
+
 .post__name--underline:hover {
   text-decoration: underline;
 }
+
 .post__date-time {
   font-size: 10px;
   font-weight: 400;
