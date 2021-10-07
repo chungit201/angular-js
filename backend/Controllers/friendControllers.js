@@ -74,3 +74,22 @@ export const updateFriend = (req, res) => {
     })
   })
 }
+
+export const findFriendToUser = (req, res) => {
+  let friend = req.query.friend ? req.query.friend : '';
+  const ObjectId = require('mongodb').ObjectId;
+  const id = new ObjectId(friend);
+  Friend.findOne({
+    "user": id
+  }).exec((err, friend) => {
+    if (err) {
+      return res.status(400).json({
+        err,
+        error: "Friend does not exist"
+      })
+    }
+    res.json({
+      friend
+    })
+  })
+}
