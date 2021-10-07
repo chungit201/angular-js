@@ -51,6 +51,24 @@ export const searchUser = (req, res) => {
         error: "User not found"
       })
     }
-    res.json((user))
+    res.json({
+      user
+    })
+  })
+}
+
+export const uniqueEmail = (req, res) => {
+  let email = req.query.email ? req.query.email : '';
+  User.find({
+    "email": new RegExp(email, 'i')
+  }).exec((err, user) => {
+    if (err) {
+      return res.status(401).json({
+        err
+      })
+    }
+    res.json({
+      user
+    })
   })
 }

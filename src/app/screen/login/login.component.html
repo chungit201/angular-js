@@ -72,6 +72,12 @@
               </div>
             </div>
           </div>
+          <div
+            *ngIf="errors"
+            class="font-serif text-center text-red-500 text-sm mb-3"
+          >
+            {{ errors }}
+          </div>
           <div class="form-group" style="display: flex">
             <button
               [disabled]="!userForm.valid"

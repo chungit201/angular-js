@@ -26,7 +26,7 @@ export class PostService {
   }
 
   public updatePost(id: string, data: PostModel[]): Observable<PostModel[]> {
-    const url = `${environment.api}/post/create/${id}`;
+    const url = `${environment.api}/post/update/${id}`;
     return this.http.put<PostModel[]>(url, data[0]);
   }
 

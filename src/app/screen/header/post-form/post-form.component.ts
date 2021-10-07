@@ -9,9 +9,9 @@ import {
   AngularFireUploadTask,
 } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { FirebaseService } from 'src/app/services/firebase.service';
+import { LikeService } from 'src/app/services/like.service';
+import { ClassField } from '@angular/compiler';
 @Component({
   selector: 'app-post-form',
   templateUrl: './post-form.component.html',
@@ -35,7 +35,8 @@ export class PostFormComponent implements OnInit {
     private userService: UserService,
     private postService: PostService,
     private storage: AngularFireStorage,
-    private router: Router // private firebaseService: FirebaseService
+    private router: Router, // private firebaseService: FirebaseService,
+    private likeService: LikeService
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +53,6 @@ export class PostFormComponent implements OnInit {
 
   public async createPost(): Promise<void> {
     let image: any = this.photo;
-    console.log(image.type);
     if (!image) {
       this.post = [
         {
@@ -60,8 +60,16 @@ export class PostFormComponent implements OnInit {
           description: this.postForm.value.description,
         },
       ];
-      this.postService.createPost(this.post).subscribe(() => {
-        window.location.reload();
+      this.postService.createPost(this.post).subscribe((post: any) => {
+        const { data } = post;
+        const like: any = [{ user: this.id, status: data._id, amount: 0 }];
+        this.likeService.createLike(like).subscribe((likes) => {
+          const { like }: any = likes;
+          const love: any = [{ like: like._id }];
+          this.postService.updatePost(data._id, love).subscribe(() => {
+            window.location.reload();
+          });
+        });
       });
       // } else if (image.size > 500000) {
       //   alert('size>5m');
@@ -86,8 +94,18 @@ export class PostFormComponent implements OnInit {
               ];
               this.postService
                 .createPost(this.post)
-                .subscribe((data: PostModel[]) => {
-                  window.location.reload();
+                .subscribe((post: PostModel[]) => {
+                  const { data }: any = post;
+                  const like: any = [{ status: data._id, amount: 0 }];
+                  this.likeService.createLike(like).subscribe((likes: any) => {
+                    const { like }: any = likes;
+                    const love: any = [{ like: like._id }];
+                    this.postService
+                      .updatePost(data._id, love)
+                      .subscribe(() => {
+                        window.location.reload();
+                      });
+                  });
                 });
             });
           })
