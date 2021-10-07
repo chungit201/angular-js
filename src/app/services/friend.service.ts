@@ -14,4 +14,8 @@ export class FriendService {
     const url = `${environment.api}/friend`;
     return this.http.get<FriendModel[]>(url);
   }
+  public findUser(id: String): Observable<FriendModel[]> {
+    const url = `${environment.api}/friend/find-user?friend=${id}`;
+    return this.http.get<FriendModel[]>(url);
+  }
 }

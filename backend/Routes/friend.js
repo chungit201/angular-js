@@ -4,10 +4,12 @@ import {
   removeFriend,
   friendID,
   updateFriend,
-  listFriend
+  listFriend,
+  findFriendToUser
 } from '../Controllers/friendControllers.js';
 const router = express.Router();
 
+router.get('/friend/find-user', findFriendToUser)
 router.post('/add-friend', addFriend);
 router.put('/friend/update/:friendID', updateFriend);
 router.delete('/friend/remove/:friendID', removeFriend);

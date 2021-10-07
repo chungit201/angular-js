@@ -3,6 +3,7 @@ import _ from 'lodash';
 import {
   __assign
 } from 'tslib';
+
 export const showLikeByID = (req, res) => {
   return res.json(req.like);
 }
