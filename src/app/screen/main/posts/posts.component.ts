@@ -38,6 +38,13 @@ export class PostsComponent implements OnInit {
        overBg.style.position = 'fixed'
        likesUser.style.display = 'block';
    }
+   outlike(){
+    const likesUser = document.querySelector('.like_user') as HTMLElement;
+    const overBg = document.querySelector('#overBg') as HTMLElement
+    likesUser.style.display = 'none';
+    overBg.style.opacity = "0";
+    overBg.style.position = ''
+   }
    clearBox(e:any){
      e.preventDefault()
      const likesUser = document.querySelector('.like_user') as HTMLElement;
