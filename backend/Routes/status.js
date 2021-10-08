@@ -5,10 +5,12 @@ import {
   statusDetail,
   removeStatus,
   createStatus,
-  updateStatus
+  updateStatus,
+  profilePosts
 } from '../Controllers/statusControllers';
 const router = express.Router();
 
+router.get('/post/profile', profilePosts);
 router.get('/post', listStatus);
 router.get('/post/detail/:postID', statusDetail);
 router.post('/post/create', createStatus);

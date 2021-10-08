@@ -86,3 +86,22 @@ export const updateStatus = (req, res) => {
     })
   })
 }
+
+export const profilePosts = (req, res) => {
+  let posts = req.query.post ? req.query.post : '';
+  const ObjectId = require('mongodb').ObjectId;
+  const id = new ObjectId(posts)
+  Status.findOne({
+    "user": id
+  }).exec((err, posts) => {
+    if (err) {
+      return res.status(400).json({
+        err,
+        error: "Post does not exist"
+      })
+    }
+    res.json({
+      posts
+    })
+  })
+}

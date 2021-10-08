@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -7,15 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   public bgColor?: string;
-
-  constructor() {}
+  public id?: string;
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
+    this.getID();
     if (this.getBgColor()) {
       this.bgColor = this.getBgColor();
     } else {
       this.bgColor = 'light';
     }
+  }
+
+  private getID(): void {
+    this.id = this.userService.getID();
   }
 
   changeBgColor(themeKey: any) {

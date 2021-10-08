@@ -28,9 +28,9 @@
         />
       </svg>
     </div>
-    <div *ngIf="search" class="search-button__menu">
-      <ul *ngIf="dataSearch[0].length > 0">
-        <li *ngFor="let user of dataSearch[0]">
+    <div *ngIf="search && dataSearch" class="search-button__menu">
+      <ul *ngIf="dataSearch.length > 0">
+        <li *ngFor="let user of dataSearch">
           <a routerLink="/profile/{{ user._id }}" class="flex items-center">
             <img *ngIf="!user.avatar" src="assets/default-user.png" alt="" />
             <img *ngIf="user.avatar" src="{{ user.avatar }}" alt="" />

@@ -34,4 +34,9 @@ export class PostService {
     const url = `${environment.api}/post/remove/${id}`;
     return this.http.delete<PostModel[]>(url);
   }
+
+  public profilePosts(id: string): Observable<PostModel[]> {
+    const url = `${environment.api}/post/profile?post=${id}`;
+    return this.http.get<PostModel[]>(url);
+  }
 }

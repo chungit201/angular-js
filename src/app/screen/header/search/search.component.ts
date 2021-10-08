@@ -19,9 +19,7 @@ export class SearchComponent implements OnInit {
         .subscribe((data: UserModel[]) => {
           let { user }: any = data;
           this.dataSearch = [];
-          console.log(user);
-          this.dataSearch?.push(user);
-          console.log(this.dataSearch);
+          this.dataSearch = user;
         });
     }, 300);
   }

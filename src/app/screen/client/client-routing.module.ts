@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: 'messenger', component: MessengerComponent },
       { path: 'register', component: SignUpComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'profile', component: UserProfileComponent },
+      { path: 'profile/:id', component: UserProfileComponent },
     ],
   },
   { path: 'active-email', component: ActiveEmailComponent },
